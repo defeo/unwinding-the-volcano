@@ -32,8 +32,7 @@ XXX: quasi-descente de la décomposition en sous-espaces caractéristiques.
 \section{The case~$ℓ = 2$}
 
 
-\subsection{Multiplicative structure of $ℤ_4$}
-
+\subsection{Multiplicative structure of quadratic extensions of~$ℚ_2$}
 
 \begin{prop}
 There exists group isomorphisms
@@ -45,7 +44,8 @@ There exists group isomorphisms
 \end{prop}
 
 We deduce from this proposition that the set of squares in~$ℤ_2$ is
-exactly~$4^{ℤ} (1 + 8 ℤ_2)$.
+exactly~$4^{ℤ} (1 + 8 ℤ_2)$, and that $ℚ_2^{×}$~modulo the squares has
+the eight classes~$±1, ±2, ±3, ±6$.
 
 Write~$ℤ_4 = ℤ_2[ω]/(ω^2-ω+1)$. We then have~$(1-2ω)^2 = -3$, which is
 therefore a square in~$ℤ_4$ (but not in~$ℤ_2$).
@@ -60,6 +60,45 @@ There exists group isomorphisms
 \end{prop}
 In this decomposition, the subgroup~$ℤ_2^{×}$ manifests itself
 as~$ω^{3ℤ/6ℤ} × (1-2ω)^{2 ℤ_2}$.
+
+
+The ramified extension~$ℚ_2[√{-1}]$ has the uniformiser~$π = √{-1}-1$ and
+the integer ring~$ℤ_2[π]$. 
+\begin{prop}
+There exists group isomorphisms
+\begin{align*}
+ℤ_2[√{-1}]^{×} &≃ (√{-1})^{ℤ/4ℤ} × (-3)^{ℤ_2} × (1+2π)^{ℤ_2};\\
+(ℤ_2[√{-1}]/π^m ℤ_2[√{-1}])^{×} &≃\begin{cases}
+(1+π)^{ℤ/2^{m-1}ℤ},&m ≤ 2;\\
+(1+π)^{ℤ/4ℤ} ×(-3)^{ℤ/2^{r-1} ℤ} ×(1+2π)^{ℤ/2^{r-1}ℤ},&m=2r+1,r ≥ 1;\\
+(1+π)^{ℤ/4ℤ} ×(-3)^{ℤ/2^{r-1} ℤ} ×(1+2π)^{ℤ/2^{r}ℤ},&m=2r+2,r ≥ 1.\\
+\end{cases}\end{align*}
+% In this decomposition, the subgroup~$ℤ_2^{×}$ manifests itself
+% as $(√{-1})^{2ℤ/4ℤ} × (-3)^{ℤ_2}$.
+\end{prop}
+
+The ramified extension~$ℚ_2[√{3}]$ has the uniformiser~$π = √{3}-1$ and
+the integer ring~$ℤ_2[π]$.
+\begin{prop}
+There exists group isomorphisms
+\begin{align*}
+ℤ_2[√{3}]^{×} &≃ (-1)^{ℤ/2ℤ} × (1+π)^{ℤ_2} × (1+2π)^{ℤ_2};\\
+(ℤ_2[√{3}]/π^m ℤ_2[√{3}])^{×} &≃\begin{cases}
+(1+π)^{ℤ/2ℤ},&m = 2;\\
+(1+π)^{ℤ/4ℤ},&m = 3;\\
+(1+π)^{ℤ/4ℤ} × (1+2π)^{ℤ/2ℤ},&m = 4;\\
+(-1)^{ℤ/2ℤ} × (1+π)^{ℤ/2^rℤ} × (1+2π)^{ℤ/2^{r-1} ℤ},&m = 2r+1, r ≥ 2;\\
+(-1)^{ℤ/2ℤ} × (1+π)^{ℤ/2^r ℤ} × (1+2π)^{ℤ/2^r ℤ},&m = 2r+2, r ≥ 2.
+\end{cases}
+\end{align*}
+\end{prop}
+
+Note that in $(ℤ_2[√{3}]/π^4)^{×}$ there is the relation $-1 ≡ (1+π)^2
+\pmod{π^4}$; therefore, we have
+\begin{equation}
+v_{π} ((1+π)^{2^n} - 1) = \begin{cases}n+1,& n ≤ 1;\\2n+2,&n ≥ 2. \end{cases}
+\end{equation}
+
 
 % \begin{lem}
 % Let~$D ∈ ℤ_2$ and write
