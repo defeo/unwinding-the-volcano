@@ -56,42 +56,23 @@ n$.
 \end{proof}
 
 \begin{prop}
-Let~$f(x) = x^2 + px + q$ be a polynomial of degree~two over~$ℤ_2$, and
-write~$D = p^2 - 4q = d r^2$ with~$r ∈ ℤ_2$ and~$d ∈ \acco {-1, ±3, ±2,
-±6}$. The conjugacy classes over~$ℤ_2$ of matrices with characteristic
-polynomial~$f$ are:
-\begin{equation}
+Let~$f(x) = x^2 + px + q$ be a separable polynomial of degree~two
+over~$ℤ_2$, and write~$D = p^2 - 4q = d r^2$ with~$r ∈ ℤ_2$ and~$d ∈
+\acco {1, -3, -4, 12, ±8, ±24}$. Then there exists exactly~$v_2(r) + 1$
+conjugacy classes over~$ℤ_2$ of matrices with characteristic
+polynomial~$f$, which are represented by
+\begin{equation}\label{eq:conj}
 \mat { \frac{-p-rd}{2} & 2^m r \frac{d-d^2}{4} \\
   2^{-m} r & \frac{-p+rd}{2} }, \quad
 \text{for $m = 0, …, v_2(r)$.}
 \end{equation}
-% \begin{enumerate}
-% \item if $d = 1$:
-% \begin{equation}
-% \mat{\frac{-p+r}{2} & 2^m \\ 0 & \frac{-p-r}{2}}, 0 ≤ m ≤ v_2(r);
-% \end{equation}
-% \item if $d = -3$:
-% \begin{equation}
-% \frac{1}{2} \mat{-p-r & 2^m r \frac{d-1}{2}\\ 2^{-m+1} r & -p+r},
-% 0 ≤ m ≤ v_2(r);
-% % \mat{\frac{-p-r}{2} & r \pa{\frac{d-1}{4}} \\ r & \frac{-p+r}{2}}; \quad
-% % \mat{-p/2 & 2^{m-1} rd \\ 2^{-m-1}r & -p/2}, 0 ≤ m ≤ v_2(r) - 1;
-% \end{equation}
-% \item if $d \not≡ 1 \pmod{4}$: 
-% \begin{equation}
-% \frac{1}{2} \mat{-p & 2^{m} rd \\ 2^{-m}r & -p}, 0 ≤ m ≤ v_2(r).
-% \end{equation}
-% \end{enumerate}
 \end{prop}
 
-Computing the index~$m$ for a matrix~$\smat{a_1&a_2\\a_3&a_4}$: we
-consider~$ℚ_2^2$ as a $K$-vector space via~$e = \smat{1\\0}$, $α·e =
-\smat{a_1\\a_3}$ and the lattice~$\fr a = ℤ_2^2 = (1, \frac{α-a_1}{a_3})
-e$.
 
-Write~$D = r^2 d$. If $d \not ≡ 1 \pmod{4}$, then $\frac{α-a_1}{a_3} =
-\frac{a_4-a_1}{2 a_3} + \frac{r}{2 a_3} √{d}$. Then $m = v_2 (r/2a_3)$.
-If $d ≡ 5 \pmod{8}$, then $\frac{α-a_1}{a_3} = \frac{a_1 - a_4 + r a_3}{2
-a_3} - \frac{r}{a_3} ω$; therefore $m = v_2(r/a_3)$.
-
+\begin{prop}
+For any integer~$s ≥ 0$, the conjugacy classes of matrices with
+characteristic polynomial~$f(x) = x^2 + px + q$ over~$ℤ/2^sℤ$ are the
+$\min (s, v_2(r)) + 1$ classes given by the formula~\eqref{eq:conj}
+with~$m ≥ \max (0, v_2(r) - s)$.
+\end{prop}
 \end{document}
