@@ -24,10 +24,10 @@ There exists group isomorphisms
 \end{prop}
 
 \begin{prop}
-Let~$f$ be an irreducible polynomial of degree~two over~$ℤ_2$.
-The set of all conjugacy classes over~$ℤ_2$ of matrices with
-characteristic polynomial~$f$ is in bijection with the set of fractional
-ideal classes of the ring~$ℤ_2[α] / (f(α))$.
+Let~$ℓ$ be a prime number and $f$~be an irreducible polynomial of
+degree~two over~$ℤ_{ℓ}$. The set of all conjugacy classes over~$ℤ_{ℓ}$ of
+matrices with characteristic polynomial~$f$ is in bijection with the set
+of fractional ideal classes of the ring~$ℤ_{ℓ}[α] / (f(α))$.
 \end{prop}
 
 \begin{prop}
@@ -55,7 +55,7 @@ fractional ideals of~$\ro O_n$ are equivalent to the~$\ro O_m$ with~$m ≤
 n$.
 \end{proof}
 
-\begin{prop}
+\begin{prop}\label{prop:conj-2x2-Z2}
 Let~$f(x) = x^2 + px + q$ be a separable polynomial of degree~two
 over~$ℤ_2$, and write~$D = p^2 - 4q = d r^2$ with~$r ∈ ℤ_2$ and~$d ∈
 \acco {1, -3, -4, 12, ±8, ±24}$. Then there exists exactly~$v_2(r) + 1$
@@ -69,10 +69,28 @@ polynomial~$f$, which are represented by
 \end{prop}
 
 
-\begin{prop}
+\begin{prop}\label{prop:conj-2x2-modulo}
 For any integer~$s ≥ 0$, the conjugacy classes of matrices with
 characteristic polynomial~$f(x) = x^2 + px + q$ over~$ℤ/2^sℤ$ are the
 $\min (s, v_2(r)) + 1$ classes given by the formula~\eqref{eq:conj}
 with~$m ≥ \max (0, v_2(r) - s)$.
 \end{prop}
+
+\begin{prop}
+Let~$k$ be a finite field and $E$~be an elliptic
+curve over~$k$. For any prime number~$ℓ$ different from the
+characteristic of~$k$, the conjugacy class of the Frobenius
+endomorphism~$φ_E$ over~$ℤ_{ℓ}$ corresponds to the $ℓ$-adic valuation of
+the conductor of the endomorphism ring of~$E$.
+\end{prop}
+
+
+\begin{proof}
+By Tate's theorem, the endomorphism ring~$\End_k E$ is isomorphic to the
+ring of Galois-equivariant endomorphisms of the Tate module~$T_{ℓ}(E)$.
+Let~$\fr a$ be a fractional ideal representing~$φ_E$; then $\End_k E$~is
+isomorphic to~$\End_{ℤ_{ℓ}[φ_E]} (\fr a)$. Let~$\ro O$ be the unique
+order of~$ℚ_{ℓ}[φ_E]$ equivalent to~$\fr a$; then we see that $\End_k E =
+\fr A$.
+\end{proof}
 \end{document}
