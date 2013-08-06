@@ -10,6 +10,7 @@
 \let\fr\mathfrak
 \DeclareMathOperator\Cl{Cl}
 \def\smat{\small\mat}
+\def\F{\mathbb{F}}
 
 \begin{document}
 \title{Conjugacy classes of square $2$-adic matrices of size~$2$}
@@ -33,7 +34,7 @@ of fractional ideal classes of the ring~$ℤ_{ℓ}[α] / (f(α))$.
 \begin{prop}
 Let~$K$ be a quadratic extension of~$ℚ_2$.
 \begin{enumerate}
-\item Let~$θ ∈ K$ such that~$\ro O_K = ℤ_2[θ]$. Then the orders of~$ℚ_2$
+\item Let~$θ ∈ K$ such that~$\ro O_K = ℤ_2[θ]$. Then the orders of~$K$
 are exactly the rings~$\ro O_n = ℤ_2[2^n θ]$, $n ≥ 0$.
 \item The fractional ideal classes of~$\ro O_n$ are the classes of~$\ro
 O_m$ for~$0 ≤ m ≤ n$.
@@ -62,19 +63,27 @@ over~$ℤ_2$, and write~$D = p^2 - 4q = d r^2$ with~$r ∈ ℤ_2$ and~$d ∈
 conjugacy classes over~$ℤ_2$ of matrices with characteristic
 polynomial~$f$, which are represented by
 \begin{equation}\label{eq:conj}
-\mat { \frac{-p-rd}{2} & 2^m r \frac{d-d^2}{4} \\
+Φ_m = \mat { \frac{-p-rd}{2} & 2^m r \frac{d-d^2}{4} \\
   2^{-m} r & \frac{-p+rd}{2} }, \quad
 \text{for $m = 0, …, v_2(r)$.}
 \end{equation}
 \end{prop}
 
 
-\begin{prop}\label{prop:conj-2x2-modulo}
-For any integer~$s ≥ 0$, the conjugacy classes of matrices with
-characteristic polynomial~$f(x) = x^2 + px + q$ over~$ℤ/2^sℤ$ are the
-$\min (s, v_2(r)) + 1$ classes given by the formula~\eqref{eq:conj}
-with~$m ≥ \max (0, v_2(r) - s)$.
-\end{prop}
+\begin{proof}
+Write~$K = ℚ_2(x)/f(x)$ and~$α ∈ K$ be a root of~$f$.
+Let~$θ = \frac{d+√d}{2}$; then~$\ro O_{K} = ℤ_2 ⊕ ℤ_2 θ$. The minimal
+polynomial of~$θ$ is~$θ^2 - d θ + \frac{d^2-d}{4} = 0$. Therefore, in the
+basis~$(1, 2^m θ)$ of the order~$\ro O_m$, the matrix of~$α = (-p + r
+√d)$ takes the form~$Φ_m$ above.
+\end{proof}
+
+% \begin{prop}\label{prop:conj-2x2-modulo}
+% For any integer~$s ≥ 0$, the conjugacy classes of matrices with
+% characteristic polynomial~$f(x) = x^2 + px + q$ over~$ℤ/2^sℤ$ are the
+% $\min (s, v_2(r)) + 1$ classes given by the formula~\eqref{eq:conj}
+% with~$m ≥ \max (0, v_2(r) - s)$.
+% \end{prop}
 
 \begin{prop}
 Let~$k$ be a finite field and $E$~be an elliptic
@@ -84,13 +93,78 @@ endomorphism~$φ_E$ over~$ℤ_{ℓ}$ corresponds to the $ℓ$-adic valuation of
 the conductor of the endomorphism ring of~$E$.
 \end{prop}
 
-
 \begin{proof}
 By Tate's theorem, the endomorphism ring~$\End_k E$ is isomorphic to the
 ring of Galois-equivariant endomorphisms of the Tate module~$T_{ℓ}(E)$.
 Let~$\fr a$ be a fractional ideal representing~$φ_E$; then $\End_k E$~is
 isomorphic to~$\End_{ℤ_{ℓ}[φ_E]} (\fr a)$. Let~$\ro O$ be the unique
 order of~$ℚ_{ℓ}[φ_E]$ equivalent to~$\fr a$; then we see that $\End_k E =
-\fr A$.
+\ro O$.
 \end{proof}
+
+
+Let~$M_c$ be the polynomials for multiplication by a constant~$c$ on~$E$,
+in projective coordinates: $c (X:Y:Z) = M_c(X:Y:Z)$.
+\begin{prop}
+The following algorithm computes the class of the Frobenius endomorphism
+of~$E$:
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}. }
+\itemsep 0pt
+\item Compute the characteristic polynomial~$χ$ of~$φ_E$, its
+discriminant~$D$, and write~$D = 4^n d$ with $d$~a fundamental
+discriminant in~$ℤ_2$.
+\item Choose a point~$(α, 0)$ of~$2$-torsion in~$E$ and define the
+polynomial~$F_0 = X - α Z$.
+\item Let~$λ_0 = 1$ and~$m_0 = M_1 = (X:Y:Z)$.
+\item \label{alg:loop1} For all~$i = 0, …, n-1$:
+\par\advance \leftskip 3em
+\item For all~$t = 0, 1$:
+\par\advance \leftskip 3em
+\item Let~$λ_{i+1} = λ_i + 2^i t$ and compute the multiplication
+polynomials~$m_{i+1} = M_{λ_{i+1}} = (X_{i+1}, Y_{i+1}, Z_{i+1})$.
+\item Let~$f_1 = F ∘ μ_2$.
+\item Let~$f_2 = X_{i+1} Z^q - Z_{i+1} X^q$.
+\item If $f = \mathrm{gcd} (f_1, f2) ≠ 1$, then set~$F = f$ and go back
+to step~\ref{alg:loop1}.
+\par\advance \leftskip -3em
+\item Return $(λ, i)$.
+\end{enumerate}
+\end{prop}
+
+As examples, we compute the Frobenius classes for all isomorphism classes
+of elliptic curves over~$\F_{17}$ with~$16$ points. The characteristic
+polynomial is then~$x^2 + 2x + 17$, with discriminant~$D = 64 = 4^2(-4)$;
+the three possible classes over~$ℤ_2$ are~
+\[ Φ_0 = \smat{9 & -20 \\ 4 & -7},
+Φ_1 = \smat{9 & -40 \\ 2 & -7} \quad\text{and}\quad
+Φ_2 = \smat{9 & -80 \\ 1 & -7}.\]
+These classes are distinct over~$ℤ/4ℤ$.
+\begin{itemize}
+\item The curve $E_{9}: y^2 = x^3 + 10x + 6$ with~$j = 9$ has
+the three 2-torsion points~$P_{1,1} = (-3, 0)$, $P_{1, 2} = (2, 0)$
+and~$P_{1,1} + P_{1,2} = (1, 0)$. This implies that $φ_{E_9}$~is trivial
+modulo~$2$.
+
+Let~$P_{2,i} = (x_i, y_i)$ be a point
+such that~$2 P_{2,i} = P_{1,i}$: then the coordinate~$x_i$ satisfy the
+equations~$x_1^4 + 12 x_1^3 + 14 x_1^2 + 4 x_1 + 2 = 0$ and~$x_2^4 + 60
+x_2^3 + 14 x_2^2 + 8 x_2 + 1 = 0$. It is readily checked that no such
+point exist with~$(x_i^{17}, y_i^{17}) = λ_i (x_i, y_i)$ with~$λ_i ∈
+\acco {1, 3}$. Therefore, $φ_{E_{9}}$ is not diagonalizable modulo~$4$.
+This proves that $φ_{E_9}$~is conjugated to~$Φ_1$ in~$GL_2(ℤ_2)$.
+
+\item The curve~$E_{11}: y^2=x^3+x$ has three 2-torsion points~$P_{1,1} =
+(0,0)$, $P_{1,2} = (-4, 0)$ and~$(4, 0)$. As before, the equations
+for~$x_i$ are $f_1 = x_1^4 - 2 x_1^2 + 1 = 0$ and~$f_2 = x_2^4 - x_2^3 -
+2 x_2^2 - x_2 + 1 = 0$. The polynomial~$x^2-1$ divides both~$f_1$
+and~$x_1^{17} - x_1$; likewise, $x^2+8x+1$ divides~$f_2$ and~$x_2^{17} -
+x_2$. Therefore, $φ_{E_{11}}$~is diagonalizable modulo~$4$ and hence
+conjugated to~$Φ_0$ in~$GL_2(ℤ_2)$.
+
+\item The curves~$E_{14}: y^2 = x^3+3x+2$ and~$E_{16}: y^2 = x^3 + 8x -
+2$ both have only one $2$-torsion point. Therefore, both Frobenius
+endomorphisms are conjugated to~$Φ_2$ in~$GL_2(ℤ_2)$.
+\end{itemize}
+
 \end{document}
