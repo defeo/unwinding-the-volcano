@@ -71,27 +71,47 @@ polynomial~$f$, which are represented by
 
 
 \begin{proof}
-Write~$K = ℚ_2(x)/f(x)$ and~$α ∈ K$ be a root of~$f$.
-Let~$θ = \frac{d+√d}{2}$; then~$\ro O_{K} = ℤ_2 ⊕ ℤ_2 θ$. The minimal
-polynomial of~$θ$ is~$θ^2 - d θ + \frac{d^2-d}{4} = 0$. Therefore, in the
-basis~$(1, 2^m θ)$ of the order~$\ro O_m$, the matrix of~$α = (-p + r
-√d)$ takes the form~$Φ_m$ above.
+In the case where $f$~is irreducible, write~$K = ℚ_2(x)/f(x)$ and~$α ∈ K$
+be a root of~$f$. Let~$θ = \frac{d+√d}{2}$; then~$\ro O_{K} = ℤ_2 ⊕ ℤ_2
+θ$. The minimal polynomial of~$θ$ is~$θ^2 - d θ + \frac{d^2-d}{4} = 0$.
+Therefore, in the basis~$(1, 2^m θ)$ of the order~$\ro O_m$, the matrix
+of~$α = (-p + r √d)/2 = (-p-rd)/2 + θ$ takes the form~$Φ_m$ above.
+
+In the reducible case, the computation by hand gives the same result,
+taking into account that~$d = 1$ and therefore~$\frac{d^2-d}{4} = 0$.
 \end{proof}
 
-% \begin{prop}\label{prop:conj-2x2-modulo}
-% For any integer~$s ≥ 0$, the conjugacy classes of matrices with
-% characteristic polynomial~$f(x) = x^2 + px + q$ over~$ℤ/2^sℤ$ are the
-% $\min (s, v_2(r)) + 1$ classes given by the formula~\eqref{eq:conj}
-% with~$m ≥ \max (0, v_2(r) - s)$.
-% \end{prop}
+\begin{prop}\label{prop:conj-2x2-modulo}
+For any integer~$s ≥ 0$, the conjugacy classes of matrices with
+characteristic polynomial~$f(x) = x^2 + px + q$ over~$ℤ/2^sℤ$ are the
+$\min (s, v_2(r)) + 1$ classes~$Φ_m$ with~$m ≥ \max (0, v_2(r) - s)$.
+\end{prop}
+
+Note that the characteristic polynomial is considered in~$ℤ_2[x]$. There
+exist matrices over~$ℤ/2^sℤ$ not falling in one of the classes~$Φ_m$ for
+their characteristic polynomial over~$ℤ/2^sℤ$: consider for example
+$A = \smat{1&2\\2&-1}$ over~$ℤ/4ℤ$, which has characteristic
+polynomial~$x^2-1$ but is not conjugated to either~$Φ_0$, $Φ_1$ or~$Φ_2$.
+However, the lifts of~$A$ over~$ℤ/8$ have characteristic
+polynomial~$x^2+3$ or~$x^2+4x-1$.
 
 \begin{prop}
-Let~$k$ be a finite field and $E$~be an elliptic
-curve over~$k$. For any prime number~$ℓ$ different from the
-characteristic of~$k$, the conjugacy class of the Frobenius
-endomorphism~$φ_E$ over~$ℤ_{ℓ}$ corresponds to the $ℓ$-adic valuation of
-the conductor of the endomorphism ring of~$E$.
+Let~$k$ be a finite field and $E$~be an elliptic curve over~$k$. For any
+prime number~$ℓ$ different from the characteristic of~$k$, the Frobenius
+endomorphism~$φ_E$ of~$E$ is conjugated over~$ℤ_{ℓ}$ to~$Φ_m$, where
+$m$~is endomorphism~$φ_E$ over~$ℤ_{ℓ}$ is~$Φ_{m}$, where $m$~is the
+conductor of the endomorphism ring of~$E$.
+
+Moreover, the functorial image of a descending isogeny has the
+matrix~$\smat{ℓ&0\\0&1}$, and the image of an ascending isogeny has the
+matrix~$\smat{1&0\\0&ℓ}$. The horizontal isogenies correspond to elements
+of~$\ro O_{K}$ with norm~$2$.
 \end{prop}
+
+Since elements with norm~$2$ belong only to the maximal order of~$K$, and
+are uniformizers of a ramified extension of~$ℚ_2$, this also proves that
+horizontal isogenies are reduced to the crater of the volcano, and that
+they may exist only when the field~$ℚ[φ]$ is ramified at~$2$.
 
 \begin{proof}
 By Tate's theorem, the endomorphism ring~$\End_k E$ is isomorphic to the
@@ -103,38 +123,38 @@ order of~$ℚ_{ℓ}[φ_E]$ equivalent to~$\fr a$; then we see that $\End_k E =
 \end{proof}
 
 
-Let~$M_c$ be the polynomials for multiplication by a constant~$c$ on~$E$,
-in projective coordinates: $c (X:Y:Z) = M_c(X:Y:Z)$.
-\begin{prop}
-The following algorithm computes the class of the Frobenius endomorphism
-of~$E$:
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}. }
-\itemsep 0pt
-\item Compute the characteristic polynomial~$χ$ of~$φ_E$, its
-discriminant~$D$, and write~$D = 4^n d$ with $d$~a fundamental
-discriminant in~$ℤ_2$.
-\item Choose a point~$(α, 0)$ of~$2$-torsion in~$E$ and define the
-polynomial~$F_0 = X - α Z$.
-\item Let~$λ_0 = 1$ and~$m_0 = M_1 = (X:Y:Z)$.
-\item \label{alg:loop1} For all~$i = 0, …, n-1$:
-\par\advance \leftskip 3em
-\item For all~$t = 0, 1$:
-\par\advance \leftskip 3em
-\item Let~$λ_{i+1} = λ_i + 2^i t$ and compute the multiplication
-polynomials~$m_{i+1} = M_{λ_{i+1}} = (X_{i+1}, Y_{i+1}, Z_{i+1})$.
-\item Let~$f_1 = F ∘ μ_2$.
-\item Let~$f_2 = X_{i+1} Z^q - Z_{i+1} X^q$.
-\item If $f = \mathrm{gcd} (f_1, f2) ≠ 1$, then set~$F = f$ and go back
-to step~\ref{alg:loop1}.
-\par\advance \leftskip -3em
-\item Return $(λ, i)$.
-\end{enumerate}
-\end{prop}
+% Let~$M_c$ be the polynomials for multiplication by a constant~$c$ on~$E$,
+% in projective coordinates: $c (X:Y:Z) = M_c(X:Y:Z)$.
+% \begin{prop}
+% The following algorithm computes the class of the Frobenius endomorphism
+% of~$E$:
+% \begin{enumerate}
+% \def\labelenumi{\arabic{enumi}. }
+% \itemsep 0pt
+% \item Compute the characteristic polynomial~$χ$ of~$φ_E$, its
+% discriminant~$D$, and write~$D = 4^n d$ with $d$~a fundamental
+% discriminant in~$ℤ_2$.
+% \item Choose a point~$(α, 0)$ of~$2$-torsion in~$E$ and define the
+% polynomial~$F_0 = X - α Z$.
+% \item Let~$λ_0 = 1$ and~$m_0 = M_1 = (X:Y:Z)$.
+% \item \label{alg:loop1} For all~$i = 0, …, n-1$:
+% \par\advance \leftskip 3em
+% \item For all~$t = 0, 1$:
+% \par\advance \leftskip 3em
+% \item Let~$λ_{i+1} = λ_i + 2^i t$ and compute the multiplication
+% polynomials~$m_{i+1} = M_{λ_{i+1}} = (X_{i+1}, Y_{i+1}, Z_{i+1})$.
+% \item Let~$f_1 = F ∘ μ_2$.
+% \item Let~$f_2 = X_{i+1} Z^q - Z_{i+1} X^q$.
+% \item If $f = \mathrm{gcd} (f_1, f2) ≠ 1$, then set~$F = f$ and go back
+% to step~\ref{alg:loop1}.
+% \par\advance \leftskip -3em
+% \item Return $(λ, i)$.
+% \end{enumerate}
+% \end{prop}
 
 As examples, we compute the Frobenius classes for all isomorphism classes
 of elliptic curves over~$\F_{17}$ with~$16$ points. The characteristic
-polynomial is then~$x^2 + 2x + 17$, with discriminant~$D = 64 = 4^2(-4)$;
+polynomial is then~$x^2 - 2x + 17$, with discriminant~$D = 64 = 4^2(-4)$;
 the three possible classes over~$ℤ_2$ are~
 \[ Φ_0 = \smat{9 & -20 \\ 4 & -7},
 Φ_1 = \smat{9 & -40 \\ 2 & -7} \quad\text{and}\quad
@@ -166,5 +186,6 @@ conjugated to~$Φ_0$ in~$GL_2(ℤ_2)$.
 2$ both have only one $2$-torsion point. Therefore, both Frobenius
 endomorphisms are conjugated to~$Φ_2$ in~$GL_2(ℤ_2)$.
 \end{itemize}
+
 
 \end{document}
