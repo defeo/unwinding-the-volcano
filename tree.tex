@@ -1,0 +1,261 @@
+\documentclass{article}
+\usepackage[margin=20mm]{geometry}
+\usepackage{math,booktabs}
+\usepackage{tikz}
+\usetikzlibrary{trees,matrix}
+\usepackage{xypic}
+\DeclareMathOperator{\PGL}{PGL}
+\DeclareMathOperator{\GL}{GL}
+\def\scalar{\mathrm{scalar}}
+\def\level{\mathrm{level}}
+\def\F{\mathbb{F}}
+\def\smat{\def\arraystretch{.6}\mat}
+
+\begin{document}
+\tikzstyle{level 1}=[sibling angle=120]
+\tikzstyle{level 2}=[sibling angle=90]
+\tikzstyle{level 3}=[sibling angle=70]
+
+The \emph{$ℓ$-adic Serre tree} of~$\GL_2$ is the set
+$\PGL_2(ℚ_{ℓ})/\PGL_2(ℤ_{ℓ})$ (for the right-side action), equipped with
+the distance
+\begin{equation}
+d(A, B) = v_{ℓ}(A^{-1} B) + v_{ℓ} (B^{-1} A)
+\end{equation}
+where $A$, $B$ are reduced (= with valuation~$0$) representatives of
+their equivalence classes.
+In other words, it is the space of lattices in~$ℚ_{ℓ}^2$, up to
+homotheties, where two lattices~$Λ$ and~$Λ'$ are at a distance~$≤ n$ iff
+there exist representatives~$L$ and~$L'$ such that
+\begin{equation}
+p^n L ⊂ L' ⊂ L.
+\end{equation}
+The $ℓ$-adic Serre tree is regular with valence~$ℓ+1$.
+Fix the standard lattice~$\mathrm{id}$ as the root of the tree. Then
+the~$ℓ+1$ nodes at distance~$1$ are~$β_{∞} = \smat{1&0\\0&ℓ}$ and~$β_i =
+\smat{ℓ&i\\0&1}$ for~$i =0…ℓ-1$. Next figure shows the part of the
+$2$-adic Serre tree with distance~$≤ 3$ from the standard lattice.
+\begin{figure}[h]
+\begin{center}
+\begin{tikzpicture}[grow cyclic,level distance=12ex]%<<<
+\node{$\mat{1&0\\0&1}$}
+  child{ node{$\mat{2&0\\0&1}$}
+    child { node {$\mat{4&0\\0&1}$}
+      child { node {$\mat{8&0\\0&1}$}
+      }
+      child { node {$\mat{8&4\\0&1}$}
+      }
+    }
+    child { node {$\mat{4&2\\0&1}$}
+      child { node {$\mat{8&2\\0&1}$}
+      }
+      child { node {$\mat{8&6\\0&1}$}
+      }
+    }
+  }
+  child{ node{$\mat{2&1\\0&1}$}
+    child { node {$\mat{4&1\\0&1}$}
+      child { node {$\mat{8&1\\0&1}$}
+      }
+      child { node {$\mat{8&5\\0&1}$}
+      }
+    }
+    child { node {$\mat{4&3\\0&1}$}
+      child { node {$\mat{8&3\\0&1}$}
+      }
+      child { node {$\mat{8&7\\0&1}$}
+      }
+    }
+  }
+  child{ node{$\mat{1&0\\0&2}$}
+    child { node {$\mat{2&1\\0&2}$}
+      child { node {$\mat{4&3\\0&2}$}
+      }
+      child { node {$\mat{4&1\\0&2}$}
+      }
+    }
+    child { node {$\mat{1&0\\0&4}$}
+      child { node {$\mat{2&1\\0&4}$}
+      }
+      child { node {$\mat{1&0\\0&8}$}
+      }
+    }
+  }
+;
+\end{tikzpicture}%>>>
+\end{center}
+\end{figure}
+The group~$PGL_2(ℤ_{ℓ})$ acts by left multiplication
+on~$\PGL_2(ℚ_{ℓ})/\PGL_2(ℤ_{ℓ})$ of~$\ro B_{ℓ}$, and this action preserves
+distance in the tree. Moreover, let~$α$ be at distance~$1$ from origin in
+the tree; then~$α = β_i$ for some~$i ∈ \acco{0, …, l-1, ∞} =
+ℙ^1(\F_{ℓ})$, and we see that for any~$g ∈ \PGL_2(ℤ_{ℓ})$, $g β_i =
+β_{h(i)}$, where $h: ℙ^1(\F_{ℓ}) → ℙ^1(\F_{ℓ})$ is the homography with
+matrix~$h = \overline{g} ∈ \PGL_2(\F_{ℓ})$.
+
+\paragraph{Example: the 2-adic tree.}
+The three elements at distance~$1$ from the origin are~$β_{∞} =
+\smat{1&0\\0&2}$, $β_{0} = \smat{2&0\\0&1}$ and~$β_{1} =
+\smat{2&1\\0&1}$. Let~$g = \mat{0&1\\1&0} ∈ \PGL_2(ℤ_2)$. Then we see
+that $g β_{∞} = β_0$, $g β_0 = β_{∞}$, and~$g β_1 = \smat{0&1\\2&1} = β_1
+\smat{-1&0\\2&1}$, and is therefore equivalent to~$β_1$ in the tree.
+We check that the matrix~$g$ verifies~$g β_i = β_{1/i}$, where~$h: i ↦ 1/i$
+is the homography with matrix~$\overline{g} = \smat{0&1\\1&0} ∈
+\PGL_2(\F_2)$.
+
+\bigskip
+
+
+Let~$ℓ ≠ p$ be primes, $E/\overline{\F_p}$ be an elliptic curve,
+$T_{ℓ}(E)$ be the Tate module~$\limp E[ℓ^n] = \acco {(x_n), x_0 = 0, ℓ ·
+x_{n+1} = x_n}$, $V_{ℓ}(E) = T_{ℓ}(E) ⊗_{ℤ_{ℓ}} ℚ_{ℓ} = \acco {(x_n),
+ℓ^{∞} x_0 = 0, ℓ · x_{n+1} = x_n}$, and~$G_{ℓ}(E) = V_{ℓ}(E) / T_{ℓ}(E)$.
+Then the $ℓ$-divisible group $G_{ℓ}(E)$~is the set of all $ℓ^{∞}$-torsion
+points of~$E$; it is isomorphic to~$(ℚ_{ℓ}/ℤ_{ℓ})^2$ as a $ℤ_{ℓ}$-module.
+
+A \emph{$ℓ^{∞}$-isogeny} is a class of equivalence of isogenies~$E → E'$ of
+order a power of~$ℓ$, modulo multiplication by a scalar on~$E$. (This is
+a path in the volcano). It is determined by its kernel, which is a
+finite subgroup~$Γ$ of~$E$, again modulo scalars.
+
+To a finite subgroup~$Γ$ of~$E$, one may associate the group~$Λ(Γ) =
+V_{ℓ}(E) ×_{G_{ℓ}(E)} Γ$. In other words, this is the set of
+points~$(x_{n})$ of~$V_{ℓ}(E)$ such that~$x_0 ∈ Γ$. This is a lattice
+in~$V_{ℓ}(E)$, and multiplying~$Γ$ by a scalar multiplies~$Λ(Γ)$ by the
+same scalar. Moreover, this lattice fits in the exact sequence
+\begin{equation}
+0 → T_{ℓ}(E) → Λ(Γ) → Γ → 0.
+\end{equation}
+
+This defines a bijection from the set of finite subgroups of~$G_{ℓ}(E)$
+(modulo scalars) to the Serre tree. Since finite subgroups
+correspond to isogenies, we may identify the following:
+
+\begin{tabular}{ll}\toprule
+Vertices of the Serre tree & Distance from origin\\
+Matrices~$\smat{ℓ^m&a\\0&ℓ^n}$, $a ∈ [0,ℓ^m[$, $\min (m,n,v_{ℓ}(a)) = 0$
+  & $m+n$ \\
+Subgroups~$Γ$ of order~$ℓ^n$ & $n$ \\
+$ℓ^n$-isogenies & $n$ \\
+\bottomrule\end{tabular}
+
+Let~$Γ$ be a finite subgroup and~$α: E → E^{Γ}$ be the corresponding
+isogeny. Since $V_{ℓ}$~is a $ℚ_{ℓ}$-vector spaces~$V_{ℓ}$, the
+map~$V_{ℓ}(α): V_{ℓ}(E) → V_{ℓ}(E^{Γ})$~is bijective, and we can deduce
+from the snake diagram
+\[\xymatrix {
+ & 0\ar@{=}[r]\ar[d] & 0\ar[r]\ar[d] & Γ\ar[d]
+ \ar`r[d]`[dd]+<0ex,5ex>`^d[ddlll]+<5ex,0ex>`d[dddll][dddll] \\
+0\ar[r] & T_{ℓ}(E)\ar[r]\ar[d] & V_{ℓ}(E)\ar[r]\ar@{=}[d] &
+  G_{ℓ}(E)\ar[r]\ar[d] & 0\\
+0\ar[r] & T_{ℓ}(E^{Γ})\ar[r]\ar[d] & V_{ℓ}(E^{Γ})\ar[r]\ar[d] &
+  G_{ℓ}(E^{Γ})\ar[r]\ar[d] & 0\\
+ & Γ \ar[r] & 0\ar@{=}[r] & 0
+}\]
+% \begin{tikzpicture}%<<< \matrix (m) [matrix of math nodes, row sep =
+% 2em, column sep = 3em] { & 0 & 0 & Γ & \\ 0 & T_{ℓ}(E) & V_{ℓ}(E) &
+% G_{ℓ}(E) & 0\\
+% 0 & T_{ℓ}(E^{Γ}) & V_{ℓ}(E^{Γ}) & G_{ℓ}(E^{Γ}) & 0\\ & Γ & 0 & 0\\};
+% \draw[=] (m-1-2)--(m-1-3); \draw[->] (m-1-3)--(m-1-4)--(m-4-2);
+% \draw[->] (m-2-1)--(m-2-2); \draw[->] (m-2-2)--(m-2-3); \draw[->]
+% (m-2-3)--(m-2-4); \draw[->] (m-2-4)--(m-2-5); \draw[->]
+% (m-3-1)--(m-3-2)--(m-3-3)--(m-3-4)--(m-3-5); \draw[->]
+% (m-1-2)--(m-2-2)--(m-3-2)--(m-4-2); \draw[->]
+% (m-1-4)--(m-2-4)--(m-3-4)--(m-4-4); \draw[->] (m-1-3)--(m-2-3);
+% \draw[=] (m-2-3)--(m-3-3); \draw[->] (m-3-3)--(m-4-3);
+% \end{tikzpicture}%>>>
+that~$0 → T_{ℓ}(E) → T_{ℓ} (E^{Γ}) → Γ → 0$~is exact, and that
+the $ℤ_{ℓ}$-modules $T_{ℓ}(E^{Γ})$ and~$Λ(Γ)$ are isomorphic as
+extensions of~$Γ$ by~$T_{ℓ}(E)$. Therefore, if $α$~is the matrix of~$Λ(Γ)
+⊂ V_{ℓ}(E)$, then $α^{-1}$~is the matrix of~$T_{ℓ}(E) → T_{ℓ}(E^{Γ})$.
+
+\bigskip
+
+All this was with coefficients in the algebraic closure. Now assume that
+$E$~is defined over a field~$k = \F_q$, and let~$φ$ be the Frobenius map
+on~$E$ and all associated $ℤ_{ℓ}$-modules $T_{ℓ}(E)$, $V_{ℓ}(E)$ etc.
+
+\bigskip
+
+XXX the following is true for~$ℓ = 2$ and maybe also in the general case.
+
+From the classification of the $2$-adic Frobenius matrices (cf. previous
+notes), we know that the level of the elliptic curve~$E/k$ in the
+$2$-isogeny volcano is the largest~$n$ such that~$φ|T_{2}(E) ≡ \scalar
+\pmod{2^n}$.
+
+\begin{lem}
+% \begin{enumerate}
+% \item Let~$M, M' ∈ ℤ_{ℓ}^{2×2}$ such that, for all~$i ∈ ℙ^1(\F_{ℓ})$,
+% \[ β_i^{-1} M β_i ∈ ℤ_{ℓ}^{2×2} ⇔ β_i^{-1} M' β_i ∈ ℤ_{ℓ}^{2×2}. \]
+% Then $M - M' \pmod{ℓ}$~is a scalar matrix.
+Let~$M, M' ∈ ℤ_{2}^{2×2}$ such that~$M, M'$~are scalar
+modulo~$2^n$, and assume that, for all~$i ∈ ℙ^1(\F_{2})$,
+\[ β_i^{-1} M β_i ≡ \scalar \pmod{2^{n}} ⇔ 
+β_i^{-1} M' β_i ≡ \scalar \pmod{2^{n}}. \]
+Then $M - M' ≡ \scalar \pmod{2^{n+1}}$.
+% \end{enumerate}
+\end{lem}
+
+\begin{proof}
+By writing~$M = c + 2^n N$, it is enough to prove that, for~$M, M' ∈
+ℤ_{2}^{2×2}$ such that, for all~$i ∈ ℙ^1(\F_{2})$,
+\[ β_i^{-1} M β_i ∈ ℤ_{2}^{2×2} ⇔ β_i^{-1} M' β_i ∈ ℤ_{2}^{2×2}, \]
+$M - M'$~is scalar modulo~$2$.
+\end{proof}
+
+\bigskip
+
+The space of \emph{ends} of the
+
+% \paragraph{Example: the curves with 244 points over~$\F_{241}$.}
+% The characteristic polynomial~$φ^2 + 2 φ + 241 = 0$ has determinant~$-960
+% = (2^3 √{-15})^2$ in~$ℤ_2$, so that the volcano has height~4. A curve at
+% the top of the volcano is $E_{38}: y^2 = x^3 + 168x + 166$. We compute
+% the $2^∞$-torsion of~$E_{38}$ and the associated Frobenius~$φ$:
+% \begin{itemize}
+% \item $E_{38}[2] = \acco { P_1 = (94,0), Q_1 = (168,0), (220,0) }$,
+% therefore~$φ|E_{38} ≡ 1 \pmod{2}$;
+% \item $E_{38}[4]$~is generated by~$P_2 = (8, √{185})$ and~$Q_2 = (124,
+% √{195})$, therefore~$φ|E_{38} ≡ 3 \pmod{4}$;
+% \end{itemize}
+% $2$-torsion points, we see that $φ|E_{38} ≡ \smat{3&0\\0&3}
+% \pmod{8}$ and~$≡ \smat{11&8\\0&3} \pmod{16}$. From this we see that
+% $α_{∞}$ and~$α_{1}$ are horizontal, while~$α_1$~is descending. The image
+% of~$α_{∞}$ is~$E_{50}: y^2 = x^3 + 180 x + 186$.
+% 
+
+% \bigskip
+% 
+% \paragraph{Example for~$x^2-2x+17$:} the (mini-)volcano of curves
+% on~$\F_{17}$ with invariants~$j ∈ \acco{11, 9, 14, 16}$. For each
+% curve~$E_j$, $φ_j$~is the conjugacy class of the Frobenius on~$T_2(E_j)$.
+% 
+% \noindent
+% \begin{tabular}{lllllll}
+% \toprule
+% \textbf{$j$-invariant} & \textbf{Frobenius} & \textbf{Depth}
+% & \textbf{2-isogeny} & $α φ α^{-1}$ & $v_2(α φ α^{-1}-1)$ &
+% \textbf{Orientation} \\
+% \midrule
+% 9 & $\smat{9&-40\\2&-7}$ & 1
+%  & $β_{∞} = \smat{1&0\\0&2}$ & $\smat{9&-20\\4&-7}$ & 2 & Ascending \\
+% &&& $β_{0} = \smat{2&0\\0&1}$ & $\smat{9&-80\\1&-7}$ & 0 & Descending \\
+% &&& $β_{1} = \smat{2&1\\0&1}$ & $\smat{10&-97\\1&-8}$ & 0 & Descending \\
+% \midrule
+% 11 & $\smat{9&-20\\4&-7}$ & 0 (crater)
+%  & $β_{∞}$ & $\smat{9&-10\\8&-7}$ & 1 & Descending \\
+% &&& $β_{0}$ & $\smat{9&-40\\2&-7}$ & 1 & Descending \\
+% \midrule
+% 14, 16 & $\smat{9&-80\\1&-7}$ & 2
+%  & $β_{∞}$ & $\smat{9&-40\\2&-7}$ & 1 & Ascending \\
+% &&& $β_{0}$ & $\smat{9&-160\\1/2&-7}$ & -1 & (Not rational) \\
+% &&& $β_{1}$ & $\smat{19/2&-353/2\\1&-14}$ & -1 & (Not rational) \\
+% \bottomrule
+% \end{tabular}
+
+% If we perform the change of basis~$P = \mat{0&1\\1&0}$ in~$T_2(E_9)$,
+% the new Frobenius is now~$P^-1 φ_9 P = \mat{-7&2\\ -40&9}$. In
+% these new coordinates, we find that now $β_0$~is ascending.
+
+\end{document}
