@@ -1,16 +1,22 @@
 \documentclass{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{lmodern}
+\usepackage{lmodern,amsmath,amsfonts,amssymb,mathrsfs,amsthm}
 \usepackage[english]{babel}
-\usepackage{math}
+% \usepackage{math}
 \usepackage{unicode}
 \usepackage[margin=15mm]{geometry}
 
 \let\fr\mathfrak
+\let\ro\mathscr
 \DeclareMathOperator\Cl{Cl}
+\DeclareMathOperator\End{End}
+\def\mat#1{\begin{pmatrix}#1\end{pmatrix}}
+\def\smat{\def\arraystretch{.6}\mat}
 \def\smat{\small\mat}
 \def\F{\mathbb{F}}
+\def\acco#1{\left\{#1\right\}}
+\newtheorem{prop}{Proposition}
 
 \begin{document}
 \title{Conjugacy classes of square $2$-adic matrices of size~$2$}

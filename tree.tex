@@ -1,30 +1,37 @@
 \documentclass{article}%<<<1
 \usepackage[margin=20mm]{geometry}
-\usepackage{math,booktabs}
+\usepackage{amsmath,amsfonts,mathrsfs}
+\usepackage{unicode}
 \usepackage{tikz}
 \usetikzlibrary{trees,matrix}
-\usepackage{xypic}
+% \usepackage{xypic}
+
+\newtheorem{df}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
 \DeclareMathOperator{\PGL}{PGL}
+\DeclareMathOperator{\End}{End}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\SL}{SL}
 \def\scalar{\mathrm{scalar}}
 \def\level#1{\mathrm{level}\pa{#1}}
 \def\F{\mathbb{F}}
+\def\mat#1{\begin{pmatrix}#1\end{pmatrix}}
 \def\smat{\def\arraystretch{.6}\mat}
+\let\limp\varprojlim
+\def\acco#1{\left\{#1\right\}}
+\def\pa#1{\left(#1\right)}
+\def\abs#1{\left|#1\right|}
 \def\card#1{\abs{#1}}
 \def\XXX{\textbf{XXX}}
 \def\labelitemi{--}
+\let\ro\mathscr
 
 \def\linkcounter#1#2{\edef\magic{\noexpand\let
   \expandafter\noexpand\csname c@#1\endcsname
   \expandafter\noexpand\csname c@#2\endcsname}\magic}
 
 \begin{document}
-\tikzstyle{level 1}=[sibling angle=120]
-\tikzstyle{level 2}=[sibling angle=90]
-\tikzstyle{level 3}=[sibling angle=70]
-
-
 The characteristic polynomial~$φ^2-4φ+43$ is split over~$ℚ_2$, with two
 eigenvalues~$λ^{♯} ≡ 1 \pmod{4}$ and~$λ^{♭} ≡ -1 \pmod{4}$.
 \section{The $ℓ$-adic Serre tree}%<<<1
@@ -54,8 +61,10 @@ $ε_{∞} = \smat{1&0\\0&ℓ}$ and~$ε_i =
 \smat{ℓ&i\\0&1}$ for~$i =0…ℓ-1$. Next figure shows the ball in the Serre
 tree of~$\PGL_2(ℤ_{2})$ with radius~$3$ and centered on the standard
 lattice.
-\begin{figure}[h]
-\begin{center}
+\tikzstyle{level 1}=[sibling angle=120]
+\tikzstyle{level 2}=[sibling angle=90]
+\tikzstyle{level 3}=[sibling angle=70]
+\begin{figure}[h] \begin{center}
 \begin{tikzpicture}[grow cyclic,level distance=12ex]%<<<
 \node{$\mat{1&0\\0&1}$}
   child{ node{$\mat{2&0\\0&1}$}
@@ -90,8 +99,7 @@ lattice.
   }
 ;
 \end{tikzpicture}%>>>
-\end{center}
-\end{figure}
+\end{center} \end{figure}
 
 
 Let~$α$ be a lattice at distance~$n$ from the origin. Then $α$~is
