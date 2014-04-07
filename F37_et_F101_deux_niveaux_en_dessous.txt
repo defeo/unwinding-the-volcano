@@ -1,0 +1,263 @@
+
+SageThe Sage Notebook
+Version 6.1.1
+
+Copy of Exemple Lucas F37 un niveau en dessous
+last edited Apr 7, 2014, 12:36:52 PM by admin
+ Typeset
+Print Worksheet Edit Text Revisions Share Publish
+View plain text
+
+sage: def frob(P, Q, q):
+...       'Computes the matrix of q-power Frobenius in basis P, Q'
+...       o = P.order()
+...       return matrix([next([i, j]
+...                           for i in Zmod(o) for j in Zmod(o)
+...                           if not (i == 0 and j == 0) and (i.lift()*P + j.lift()*Q).xy() == point )
+...                      for point in ((P[0]^q, P[1]^q), (Q[0]^q, Q[1]^q))]).transpose()
+
+sage: def change_basis(M, P, Q):
+...       'Compute the matrix-vector product M * (P,Q)^t'
+...       M = M.lift()
+...       return M[0,0]*P + M[0,1]*Q, M[1,0]*P + M[1,1]*Q
+
+sage: def elem_step(M, h, P, i, Q, q):
+...       "Jérôme's elementary step (I believe)"
+...       P, Q = change_basis(M, h*P, i*Q)
+...       return frob(P.division_points(h)[0], Q.division_points(i)[0], q)
+
+sage: K = GF(101)
+sage: E1=EllipticCurve(j=K(28)).quadratic_twist();E1.cardinality().factor()
+2^5 * 3
+
+sage: Kc.<a>=FiniteField(101^8)
+
+#On définit une focntion qui nous permet de considérer les courbes elliptiques sur les extensions
+sage: def construction_lift(E1,k,p):
+...   	K=FiniteField(p)
+...           a=E1.a4()
+...   	b=E1.a6()
+...           a=K(a)
+...           b=K(b)
+...   	E2=EllipticCurve(k,[a,b])
+...   	return E2
+
+sage: E11=construction_lift(E1,Kc,101); E11
+Elliptic Curve defined by y^2 = x^3 + 6*x + 55 over Finite Field in a of size 101^8
+
+sage: L=E11([0,1,0]).division_points(8); L=filter(lambda x: x.order()==8 , L); len(L)
+48
+sage: M=filter(lambda x: E11(x.xy()[0]^101,x.xy()[1]^101)==x , L) ; len(M)
+16
+sage: N=filter(lambda x: E11(x.xy()[0]^101,x.xy()[1]^101)==101*x , L) ; len(N)
+16
+sage: P1 = M[randint(0,len(M)-1)]; P1
+(91 : 56 : 1)
+sage: Q1 = N[randint(0,len(N)-1)]; Q1
+(85*a^7 + 88*a^6 + 48*a^5 + 46*a^4 + 96*a^3 + 52*a^2 + 29*a + 80 : 90*a^7 + 10*a^6 + 33*a^5 + 19*a^4 + 66*a^3 + 61*a^2 + a + 93 : 1)
+sage: Phi = frob(P1, Q1, 101); Phi
+[1 0]
+[0 5]
+sage: Psi = [m for m in Phi.parent() if m.is_invertible() and Phi*m == m*Phi]
+sage: len(Psi)
+256
+
+sage: alpha_a = E11.isogeny(4*P1)
+sage: E1a = alpha_a.codomain()
+sage: P1a = alpha_a(P1).division_points(2)[0]
+sage: Q1a = alpha_a(Q1)
+sage: Phia = frob(P1a, Q1a, 101); Phia
+[1 0]
+[0 5]
+sage: Psia = filter(lambda m : elem_step(m, 2, P1a, 1, Q1a, 101) == Phia, Psi)
+sage: len(Psia)
+128
+
+sage: alpha_b = E1a.isogeny(4*P1a)
+sage: E1b = alpha_b.codomain()
+sage: P1b = alpha_b(P1a).division_points(2)[0]
+sage: Q1b = alpha_b(Q1a)
+sage: Phib = frob(P1b, Q1b, 101); Phib
+[1 0]
+[4 5]
+sage: Psib = filter(lambda m : elem_step(m, 4, P1b, 1, Q1b, 101) == Phib, Psia)
+sage: len(Psib)
+64
+
+sage: beta_b = E1b.isogeny(4*Q1b)
+sage: E1c = beta_b.codomain()
+sage: P1c = beta_b(P1b)
+sage: Q1c = beta_b(Q1b).division_points(2)[3]
+sage: Phic = frob(P1c, Q1c, 101); Phic
+[1 0]
+[0 5]
+sage: Psic = filter(lambda m : elem_step(m, 1, P1c, 2, Q1c, 101) == Phic, Psib)
+sage: len(Psic)
+32
+
+sage: beta_a = E1c.isogeny(4*Q1c)
+sage: E1d = beta_a.codomain()
+sage: P1d = beta_a(P1c)
+sage: Q1d = beta_a(Q1c).division_points(2)[0]
+sage: Phid = frob(P1d, Q1d, 101); Phid
+[1 0]
+[0 5]
+sage: Psid = filter(lambda m : elem_step(m, 1, P1d, 4, Q1d, 101) == Phid, Psic)
+sage: len(Psid)
+16
+
+sage: PP1 = P1.division_points(2)[0]
+sage: QQ1 = Q1.division_points(2)[0]
+<p>On descend d'un niveau dans le volcan</p>
+sage: gamma = E11.isogeny(4*(P1 + Q1))
+sage: sE1 = gamma.codomain()
+sage: sP1 = gamma(P1).division_points(2)[0]; 2*sP1
+(80 : 78 : 1)
+sage: sQ1 = gamma(PP1+QQ1);sQ1
+(63*a^7 + 34*a^6 + 76*a^5 + 48*a^4 + 67*a^3 + 64*a^2 + 66*a + 69 : 18*a^7 + 27*a^6 + 25*a^5 + 96*a^4 + 7*a^3 + 72*a^2 + 56*a + 75 : 1)
+sage: Phie = frob(2*sP1, sQ1, 101); Phie
+[1 6]
+[0 5]
+sage: Psie = filter(lambda m : elem_step(m, 1, 2*sP1, 1, sQ1, 101) == Phie, Psid)
+sage: len(Psie)
+8
+
+sage: PP1b=P1c
+sage: PP1b.order()
+8
+sage: QQ1b=Q1c
+sage: PP1c=PP1b.division_points(2)[0]
+sage: QQ1b.order()
+8
+sage: QQ1c=QQ1b.division_points(2)[0]
+sage: (PP1c+QQ1c).order()
+16
+<p>On veut maintenant descendre de deux niveaux en dessous du crat&egrave;re du volcan</p>
+sage: gamma_d = E1c.isogeny(4*(PP1c + QQ1c))
+sage: sE1b = gamma_d.codomain()
+sage: sP1b = 2*gamma_d(PP1c)
+sage: sQ1b = gamma_d(PP1c+QQ1c).division_points(2)[0]
+sage: sQ1b.weil_pairing(sP1b,8).multiplicative_order()
+8
+sage: Phif = frob(sP1b, sQ1b, 101); Phif
+[1 5]
+[0 5]
+sage: Psif = filter(lambda m : elem_step(m, 1, sP1b, 1, sQ1b, 101) == Phif, Psid)
+sage: Psif
+[
+[1 0]  [3 0]  [5 0]  [7 0]
+[0 1], [0 3], [0 5], [0 7]
+]
+<p>On obtient le m&ecirc;me r&eacute;sultat qu'avec l'exemple de Lucas d&eacute;velopp&eacute; ci-dessous</p>
+
+sage: sE1b([0,1,0]).division_points(2)
+[(0 : 1 : 0), (38*a^7 + 94*a^6 + 88*a^5 + 17*a^4 + 75*a^3 + 28*a^2 + 70*a + 11 : 0 : 1), (52 : 0 : 1), (63*a^7 + 7*a^6 + 13*a^5 + 84*a^4 + 26*a^3 + 73*a^2 + 31*a + 38 : 0 : 1)]
+<p>On ne peut pas descendre plus bas on a qu'un seul point de 2-torsion pour l'isog&eacute;nie montante...</p>
+
+
+<p>Ici on reprend l'exemple de Lucas</p>
+sage: F.<z>=FiniteField(37^8)
+sage: E1 = EllipticCurve(F, (23, 7))
+sage: P1u = E1(0, 9)
+sage: L=E1([0,1,0]).division_points(8); L=filter( lambda x: x.order()==8 , L) ; L=filter( lambda x : E1(x.xy()[0]^37, x.xy()[1]^37)==37*x , L); len(L)
+16
+sage: Q1u=L[randint(0,len(L)-1)]
+sage: Phi = frob(P1u, Q1u, 37)
+sage: Psi = [m for m in Phi.parent() if m.is_invertible() and Phi*m == m*Phi]
+sage: len(Psi)
+256
+sage: alpha_a = E1.isogeny(4*P1u)
+sage: E1a = alpha_a.codomain()
+sage: P1a = alpha_a(P1u).division_points(2)[0]
+sage: Q1a = alpha_a(Q1u)
+sage: Phia = frob(P1a, Q1a, 37); Phia
+[1 0]
+[0 5]
+sage: Psia = filter(lambda m : elem_step(m, 2, P1a, 1, Q1a, 37) == Phia, Psi)
+sage: len(Psia)
+128
+sage: alpha_b = E1a.isogeny(4*P1a)
+sage: E1b = alpha_b.codomain()
+sage: P1b = alpha_b(2*P1a).division_points(4)[0]
+sage: Q1b = alpha_b(Q1a)
+sage: Phib = frob(P1b, Q1b, 37)
+sage: Psib = filter(lambda m : elem_step(m, 4, P1b, 1, Q1b, 37) == Phib, Psia)
+sage: len(Psib)
+64
+sage: beta_b = E1b.isogeny(4*Q1b)
+sage: E1c = beta_b.codomain()
+sage: P1c = beta_b(P1b)
+sage: Q1c = beta_b(Q1b).division_points(2)[0]
+sage: Phic = frob(P1c, Q1c, 37)
+sage: Psic = filter(lambda m : elem_step(m, 1, P1c, 2, Q1c, 37) == Phic, Psib)
+sage: len(Psic)
+32
+sage: beta_a = E1c.isogeny(4*Q1c)
+sage: E1d = beta_a.codomain()
+sage: P1d = beta_a(P1c)
+sage: Q1d = beta_a(2*Q1c).division_points(4)[0]
+sage: Phid = frob(P1d, Q1d, 37)
+sage: Psid = filter(lambda m : elem_step(m, 1, P1d, 4, Q1d, 37) == Phid, Psic)
+sage: len(Psid)
+16
+sage: PP1 = P1d.division_points(2)[0]
+sage: QQ1 = Q1d.division_points(2)[0]
+sage: gamma = E1d.isogeny(8*(PP1 + QQ1))
+sage: sE1 = gamma.codomain()
+sage: sP1 = gamma(PP1)
+sage: sQ1 = gamma(PP1+QQ1)
+sage: Phie = frob(2*sP1, sQ1, 37); Phie
+[1 2]
+[0 5]
+sage: Psie = filter(lambda m : elem_step(m, 1, 2*sP1, 1, sQ1, 37) == Phie, Psid)
+sage: Psie
+[
+[1 0]  [5 0]  [3 0]  [1 0]  [7 0]  [5 0]  [3 0]  [7 0]
+[0 1], [0 1], [0 3], [0 5], [0 3], [0 5], [0 7], [0 7]
+]
+sage: delta=E1d.isogeny(2*(P1d+Q1d))
+sage: E1g=delta.codomain()
+sage: PP1g=delta(P1d)
+sage: QQ1g=delta(Q1d+P1d)
+sage: P1delta=PP1g
+sage: Q1delta=QQ1g.division_points(4)[randint(0,3)]
+sage: Phidelta = frob(P1delta, Q1delta, 37); Phidelta
+[1 1]
+[0 5]
+sage: Psif = filter(lambda m : elem_step(m, 1, P1delta, 1, Q1delta, 37) == Phidelta, Psie)
+sage: Psif
+[
+[1 0]  [3 0]  [5 0]  [7 0]
+[0 1], [0 3], [0 5], [0 7]
+]
+sage: P1delta.curve()==E1g
+True
+sage: E1g([0,1,0]).division_points(2)
+[(0 : 1 : 0), (25 : 0 : 1), (32*z^7 + 19*z^6 + 30*z^5 + 23*z^4 + 31*z^3 + 32*z^2 + 33*z + 14 : 0 : 1), (5*z^7 + 18*z^6 + 7*z^5 + 14*z^4 + 6*z^3 + 5*z^2 + 4*z + 35 : 0 : 1)]
+<p>On ne peut pas descendre on a qu'un seul point rationnel de 2-torsion, celui qui monte. Essayons maintenant en partant d'une autre courbe du volcan.</p>
+sage: E1c==E1d
+False
+sage: epsilon=E1c.isogeny(2*(P1c+Q1c))
+sage: E1h=epsilon.codomain()
+sage: P1epsilon=epsilon(P1c)
+sage: Q1i=epsilon(Q1c+P1c)
+sage: Q1epsilon=Q1i.division_points(4)[0];  Q1epsilon
+(10*z^7 + 6*z^6 + 29*z^5 + 33*z^4 + 8*z^3 + 35*z^2 + 26*z + 10 : 28*z^7 + 21*z^6 + 3*z^5 + 33*z^4 + 20*z^3 + 14*z^2 + 20*z + 9 : 1)
+sage: Q1epsilon.order()==P1epsilon.order()==8
+True
+sage: Q1epsilon.weil_pairing(P1epsilon,8).multiplicative_order()
+8
+sage: Phiepsilon = frob(P1epsilon, Q1epsilon, 37); Phiepsilon
+[1 5]
+[0 5]
+sage: Psif2 = filter(lambda m : elem_step(m, 1, P1epsilon, 1, Q1epsilon, 37) == Phiepsilon, Psie)
+sage: Psif2
+[
+[1 0]  [3 0]  [5 0]  [7 0]
+[0 1], [0 3], [0 5], [0 7]
+]
+sage: E1h([0,1,0]).division_points(2)
+[(0 : 1 : 0), (13 : 0 : 1), (36*z^7 + 26*z^6 + 6*z^5 + 12*z^4 + 21*z^3 + 36*z^2 + 14*z + 21 : 0 : 1), (z^7 + 11*z^6 + 31*z^5 + 25*z^4 + 16*z^3 + z^2 + 23*z + 3 : 0 : 1)]
+<p>On voit bien &agrave; nouveau que cela ne d&eacute;pend pas du choix de la courbe de base.</p>
+
+
