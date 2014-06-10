@@ -10,7 +10,7 @@ def log_discret(Qf,Qb,Pb,p,l,k):#retourne la matrice de frobenius du point Qf da
 	return j
 
 
-#La fonction suivante sert à cacluler un unique point de l-division de el sur la courbe E
+#La fonction suivante sert à cacluler un unique point de l-division du point el sur la courbe E
 def fonction_auxiliaire_test(l,el,E):
         ans=[]
         nel=-el
@@ -56,26 +56,24 @@ def division_point_new_q(l,k,P,E):#calcule un unique l^k point de division de P
 #La focntion suivante calcule deux points de base du module de Tate pour la l^k torsion
 
 def division_point_new_deux(l,k,E):
-	L=[E(0)]; M=[]
-	for i in range(k):
-                if i!=0:
+	M=[]
+        g = E.division_polynomial(l)
+        for x in g.roots(multiplicities=False):
+      	    if E.is_x_coord(x):
+      	        Q = E.lift_x(x)
+                lQ = l*Q
+                if lQ == E(0):
+                    M.append(Q)
+        L=M; j=1;
+        while  L[j].weil_pairing(L[0],l).multiplicative_order()!=l:
+            j=j+1
+        L=[L[0],L[j]]
+	for i in range(1,k):
                     M=[]
                     for el in L:
                         N=fonction_auxiliaire_test(l,el,E)
                         M.append(N[0])
-                    L=M
-                if i==0 :
-		    g = E.division_polynomial(l)
-		    for x in g.roots(multiplicities=False):
-                    	if E.is_x_coord(x):
-                		Q = E.lift_x(x)
-                    	  	lQ = l*Q
-                    	if lQ == E(0):
-                    		M.append(Q)
-        	    L=M; j=1;
-                    while  L[j].weil_pairing(L[0],l).multiplicative_order()!=l:
-                        j=j+1
-                    L=[L[0],L[j]]
+                    L=M		    
 	return L
 
 #Cette fonction calcule sur le cratère des candidats pour le module de Tate à la l^k2 torsion
@@ -224,7 +222,7 @@ def synthese(E1,E2,p,l,k2,i):
 
 def test_temps_calcul(E1,E2,p,l,k2,i,occurrence):
     t1=t2=t3=0;
-    for i in range(occurrence):
+    for j in range(occurrence):
         t=cputime();
         L=calcul_ima_iso_1(E1,E2,p,l,k2);
         a=cputime(t)
@@ -237,4 +235,4 @@ def test_temps_calcul(E1,E2,p,l,k2,i,occurrence):
         L=synthese(E1,E2,p,l,k2,i);
         a=cputime(t)
         t3=t3 + a
-    return [t1/occurence,t2/occurence,t3/occurence]
+    return [t1/occurrence,t2/occurrence,t3/occurrence]
