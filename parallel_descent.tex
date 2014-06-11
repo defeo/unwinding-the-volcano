@@ -1,0 +1,63 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mysymbols}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\usepackage{tikz}
+
+\usepackage{color}
+\newcommand{\todo}[1]{(\textcolor{red}{TODO: #1})}
+
+\newtheorem{Def}{Definition}
+\newtheorem{Theo}{Theorem}
+\newtheorem{Prop}{Proposition}
+\newtheorem{Lemma}{Lemma}
+\newtheorem{Coro}{Corollary}
+
+\renewcommand{\O}{\mathcal{O}}
+
+\title{Parallel paths on isogeny volcanoes}
+
+\begin{document}
+\maketitle
+
+Let $E$ and $E'$ be two ordinary elliptic curves defined over $\F_q$,
+isogenous of degree $n$, and let $\ell$ be a prime not dividing
+$qn$. We denote by $\pi_E$ the Frobenius endomorphism of $E$, and by
+$\pi_{E'}$ the one of $E'$; when there is no ambiguity, we simply
+write $\pi$. Because the two curves are isogenous, their Frobenius
+morphisms are annihilated by the same quadratic polynomial
+\[\pi^2 - t\pi + q.\]
+
+Define $d_\pi=t^2-4q$, and let $K=\Q[\sqrt{d_\pi}]$. The endomorphism
+ring of $E$ is isomorphic to an order $\O_E$ such that
+$\Z[\pi]\subset\O_E\subset\O_K$, where $O_K$ is the ring of integers
+of $K$. Write $d_\pi=f^2d_K$ with $d_K$ squarefree, then
+$[\O_K:\Z[\pi]]=f$ is the conductor of $\Z[\pi]$, and the conductor of
+$\O_E$ must divide $f$.
+
+Because of the hypothesis, the conductors of $\O_E$ and $\O_{E'}$ must
+have the same $\ell$-adic valuation.
+
+
+It is well known that elliptic curves up to isomorphism, together with
+isogenies of degree $\ell$, for a multigraph, called $\ell$-isogeny
+volcano. The height of the volcano is equal to half the $\ell$-adic
+valuation of the discriminant, 
+
+
+
+\end{document}
+
+
+
+% Local Variables:
+% ispell-local-dictionary:"american"
+% End:
+
+
+% LocalWords:  isogeny isogenous isomorphism isogenies endomorphism
+% LocalWords:  Frobenius squarefree
