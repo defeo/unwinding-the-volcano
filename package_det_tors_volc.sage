@@ -9,6 +9,11 @@ def log_discret(Qf,Qb,Pb,p,l,k):#retourne la matrice de frobenius du point Qf da
 			j=j+2^(i-1)
 	return j
 
+def cantor(f,q,): #algorithme de Cantor-Zassenhaus qui donne à la fin les racines de f, on sait que f se scinde.
+	pari('M=factorcantor(g,q); L=[-polcoeff(M[1,1],0,x),-polcoeff(M[2,1],0,x),-polcoeff(M[3,1],0,x),-polcoeff(M[4,1],0,x)]')
+	L=(pari('L')).python()
+	return L
+
 
 #La fonction suivante sert à cacluler un unique point de l-division du point el sur la courbe E
 def fonction_auxiliaire_test(l,el,E):
