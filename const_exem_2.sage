@@ -37,10 +37,13 @@ def test_forme_cratere(p): #on teste la forme du cratère pour toutes les courbe
 	K=FiniteField(p)
 	for i in range(p):
 		E=EllipticCurve(j=K(i))
-    		N=E.cardinality(); g=valuation(N,2);
-		if g%2==0 and N%2==0:
-			h=g/2; L=filter(lambda x : x.order()==2^h, E(0).division_points(2^h)); P=L[0]; M=filter(lambda x: x.weil_pairing(P,2^h).multiplicative_order()==2^h, L); 
-			if len(M)>0:			
+    		N=E.cardinality(); g=valuation(N,2); h=g.quo_rem(2)[0];Eb=E.quadratic_twist(); Nb=Eb.cardinality(); gb=valuation(Nb,2); hb=gb.quo_rem(2)[0];
+		if hb>h:
+			E=Eb; g=gb; h=hb; N=Nb; print "twist"
+		if h!=0 and N%2==0:
+			L=filter(lambda x : x.order()==2^h, E(0).division_points(2^h)); P=L[0]; M=filter(lambda x: x.weil_pairing(P,2^h).multiplicative_order()==2^h, L); 
+			if len(M)>0:
+				print "h",h,i			
 				Q=M[0]
 				R=2^(h-1)*P; E1=E.isogeny_codomain(R)
 				R=2^(h-1)*Q; E2=E.isogeny_codomain(R)
