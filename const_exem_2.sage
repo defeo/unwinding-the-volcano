@@ -39,11 +39,10 @@ def test_forme_cratere(p): #on teste la forme du cratère pour toutes les courbe
 		E=EllipticCurve(j=K(i))
     		N=E.cardinality(); g=valuation(N,2); h=g.quo_rem(2)[0];Eb=E.quadratic_twist(); Nb=Eb.cardinality(); gb=valuation(Nb,2); hb=gb.quo_rem(2)[0];
 		if hb>h:
-			E=Eb; g=gb; h=hb; N=Nb; print "twist"
+			E=Eb; g=gb; h=hb; N=Nb;
 		if h!=0 and N%2==0:
 			L=filter(lambda x : x.order()==2^h, E(0).division_points(2^h)); P=L[0]; M=filter(lambda x: x.weil_pairing(P,2^h).multiplicative_order()==2^h, L); 
-			if len(M)>0:
-				print "h",h,i			
+			if len(M)>0:		
 				Q=M[0]
 				R=2^(h-1)*P; E1=E.isogeny_codomain(R)
 				R=2^(h-1)*Q; E2=E.isogeny_codomain(R)
@@ -69,6 +68,6 @@ def test_forme_cratere(p): #on teste la forme du cratère pour toutes les courbe
 						c=c+1
 					bool=True
 				if bool==True:
-					print E.j_invariant(),d,h
+					print d,h,N.factor(), E.j_invariant()
 				d=0; bool=False;
 	print c,e,p;
