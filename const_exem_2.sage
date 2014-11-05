@@ -71,3 +71,16 @@ def test_forme_cratere(p): #on teste la forme du cratère pour toutes les courbe
 					print d,h,N.factor(), E.j_invariant()
 				d=0; bool=False;
 	print c,e,p;
+
+
+def identical_rafting(P,E1,phi1,phi2): #cette fonction regarde si le chemin descendant donné par le point P est le même après des images par phi1 et phi2
+	E1b1=phi1.codomain()
+	E1b2=phi2.codomain()
+	P1=phi1(P)
+	P2=phi2(P)
+	j=E1.isogeny_codomain(P).j_invariant()
+	j1=E1b1.isogeny_codomain(P1).j_invariant()
+	j2=E1b2.isogeny_codomain(P2).j_invariant()
+	print "j",j,"j1",j1,"j2",j2;
+
+	
