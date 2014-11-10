@@ -32,7 +32,7 @@ def test_complet_4_eme_cas_val(p): #fonction juste utile pour voir la forme de l
 				print r,e,d,"echec"
 	print c,g,p
 
-def test_forme_cratere(p): #on teste la forme du cratère pour toutes les courbes définies sur GF(p)
+def test_forme_cratere(p): #on teste la forme du cratère du volcan de 2 isogenie pour toutes les courbes définies sur GF(p)
 	c=0; d=0; e=0; bool=False;
 	K=FiniteField(p)
 	for i in range(p):
@@ -83,4 +83,33 @@ def identical_rafting(P,E1,phi1,phi2): #cette fonction regarde si le chemin desc
 	j2=E1b2.isogeny_codomain(P2).j_invariant()
 	print "j",j,"j1",j1,"j2",j2;
 
-	
+def recherche_rationnel_diversifie(q,h):
+	K.<a>=GF(q)
+        p=K.characteristic()
+	L=[]
+        if p!=q :
+	    for i in range(1,q):
+                if (a^i)^p==a^i:
+                    
+	            E=EllipticCurve(j=K(a^i))
+		    N=E.cardinality()
+		    t=E.trace_of_frobenius()
+		    d=t^2-4*q
+		    f=valuation(d,2)
+		    if f!=+Infinity:
+		        if N/(2^f)!=1  and (d%8==1 or d%8==7) and N%2==0:	        
+		    	    I=[N.factor(),a^i]	
+                            L.append(I)
+        else :
+            for i in range(1,q):
+                E=EllipticCurve(j=K(i))
+		N=E.cardinality()
+		t=E.trace_of_frobenius()
+		d=t^2-4*q
+		f=valuation(d,2)
+		if f!=+Infinity:
+		    if N/(2^f)!=1 and (d%8==1 or d%8==7) and N%2==0:	    
+		    	I=[N.factor(),i]	
+                    	L.append(I)
+        print len(L)
+        return L	
