@@ -113,3 +113,43 @@ def recherche_rationnel_diversifie(q,h):
                     	L.append(I)
         print len(L)
         return L	
+
+def frobenius_and_rafting(P,E1,phi1,p): #cette fonction regarde si le chemin descendant donné par le point P est le même après des images par phi1 et phi2
+	E1b1=phi1.codomain()
+	P1=phi1(P)
+	P2=E1(P.xy()[0]^p,P.xy()[1]^p)
+	j=E1.isogeny_codomain(P).j_invariant()
+	j1=E1b1.isogeny_codomain(P1).j_invariant()
+	j2=E1.isogeny_codomain(P2).j_invariant()
+	print "j",j,"j1",j1,"j2",j2;
+
+def recherche_rationnel_diversifie(q,h):
+	K.<a>=GF(q)
+        p=K.characteristic()
+	L=[]
+        if p!=q :
+	    for i in range(1,q):
+                if (a^i)^p==a^i:
+                    
+	            E=EllipticCurve(j=K(a^i))
+		    N=E.cardinality()
+		    t=E.trace_of_frobenius()
+		    d=t^2-4*q
+		    f=valuation(d,2)
+		    if f!=+Infinity:
+		        if N/(2^f)!=1  and (d%8==1 or d%8==7) and N%2==0:	        
+		    	    I=[N.factor(),a^i]	
+                            L.append(I)
+        else :
+            for i in range(1,q):
+                E=EllipticCurve(j=K(i))
+		N=E.cardinality()
+		t=E.trace_of_frobenius()
+		d=t^2-4*q
+		f=valuation(d,2)
+		if f!=+Infinity:
+		    if N/(2^f)!=1 and (d%8==1 or d%8==7) and N%2==0:	    
+		    	I=[N.factor(),i]	
+                    	L.append(I)
+        print len(L)
+        return L	
