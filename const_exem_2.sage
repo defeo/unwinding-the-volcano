@@ -152,4 +152,27 @@ def recherche_rationnel_diversifie(q,h):
 		    	I=[N.factor(),i]	
                     	L.append(I)
         print len(L)
-        return L	
+        return L
+
+def recherche_courbe_diversifie(q,n_i,h):
+	K.<a>=GF(q)
+        p=K.characteristic()
+	L=[]
+        if p!=q :
+	    for i in range(1,q):
+                if (a^i)^p==a^i:
+                    
+	            E=EllipticCurve(j=K(a^i))
+		    N=E.cardinality()
+		    if ( N%n_i==0 and N%2^h==0):
+		        I=[N.factor(),a^i]
+                        L.append(I)
+        else :
+            for i in range(1,q):
+                E=EllipticCurve(j=K(i))
+		N=E.cardinality()
+		if ( N%n_i==0 and N%2^h==0):
+		        I=[N.factor(),i]	
+                     	L.append(I)
+        print len(L)
+        return L		
