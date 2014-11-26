@@ -207,6 +207,7 @@ def etude_end_path_bas(P,Q,L):#décrit l'action de l'endomorphisme de la courbe 
 		if i*P1==P:
 			print "i",i;
 			a=i;
+	for j in range(1,n):
 		if j*Q1==Q:
 			print "j",j;
 			b=j;
