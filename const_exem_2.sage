@@ -83,6 +83,23 @@ def identical_rafting(P,E1,phi1,phi2): #cette fonction regarde si le chemin desc
 	j2=E1b2.isogeny_codomain(P2).j_invariant()
 	print "j",j,"j1",j1,"j2",j2;
 
+def identical_rafting_path(P,E1,L1,L2,p): #cette fonction regarde si le chemin descendant donné par le point P est le même après des images par L1 et L2 listes d'isogénies
+	P1=P;
+	P2=P;
+	for l1 in L1 :
+		E1b1=l1.codomain()
+		P1=l1(P1)
+	for l2 in L2 :
+		E1b2=l2.codomain()
+		P2=l2(P2)
+
+	P3=E1(P.xy()[0]^p,P.xy()[1]^p)
+	j3=E1.isogeny_codomain(P3).j_invariant()
+	j=E1.isogeny_codomain(P).j_invariant()
+	j1=E1b1.isogeny_codomain(P1).j_invariant()
+	j2=E1b2.isogeny_codomain(P2).j_invariant()
+	print "j",j,"j1",j1,"j2",j2,"j3",j3;
+
 def recherche_rationnel_diversifie(q,h):
 	K.<a>=GF(q)
         p=K.characteristic()
@@ -154,7 +171,7 @@ def recherche_rationnel_diversifie(q,h):
         print len(L)
         return L
 
-def recherche_courbe_diversifie(q,n_i,h):
+def recherche_courbe_diversifie(q,n_i,h):#recherche une courbe sur Fq de cardinal divisible par 2^h et n_i
 	K.<a>=GF(q)
         p=K.characteristic()
 	L=[]
@@ -175,4 +192,22 @@ def recherche_courbe_diversifie(q,n_i,h):
 		        I=[N.factor(),i]	
                      	L.append(I)
         print len(L)
-        return L		
+        return L	
+
+def etude_end_path_bas(P,Q,L):#décrit l'action de l'endomorphisme de la courbe sur une base donnée
+	n=P.order()
+	P1=P
+	Q1=Q
+	a=0;
+	b=0;
+	for l in L:
+		P1=l(P1);
+		Q1=l(Q1);
+	for i in range(1,n):
+		if i*P1==P:
+			print "i",i;
+			a=i;
+		if j*Q1==Q:
+			print "j",j;
+			b=j;
+	return a,b;	
