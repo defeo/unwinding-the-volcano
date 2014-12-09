@@ -92,13 +92,59 @@ def identical_rafting_path(P,E1,L1,L2,p): #cette fonction regarde si le chemin d
 	for l2 in L2 :
 		E1b2=l2.codomain()
 		P2=l2(P2)
-
 	P3=E1(P.xy()[0]^p,P.xy()[1]^p)
 	j3=E1.isogeny_codomain(P3).j_invariant()
 	j=E1.isogeny_codomain(P).j_invariant()
 	j1=E1b1.isogeny_codomain(P1).j_invariant()
 	j2=E1b2.isogeny_codomain(P2).j_invariant()
 	print "j",j,"j1",j1,"j2",j2,"j3",j3;
+
+def identical_frobenius_path(P,Pt,E1,L1,L2,p): #cette fonction regarde si le chemin descendant donné par le point P est le même après des images par L1 et L2 listes d'isogénies
+	Pt1=Pt;
+	Pt2=Pt;
+	P1=P;
+	P2=P;
+	for l1 in L1 :
+		E1b1=l1.codomain()
+		Pt1=l1(Pt1)
+		P1=l1(P1)
+	for l2 in L2 :
+		E1b2=l2.codomain()
+		Pt2=l2(Pt2)
+		P2=l2(P2)
+	i0=9;
+	i1=9;
+	i2=9;
+	L11=filter(lambda x: x.xy()[0]^p==x.xy()[0] and x.xy()[1]^p==x.xy()[1],P1.division_points(2));
+	P1=L11[randint(0,len(L11)-1)];
+	L12=filter(lambda x: x.xy()[0]^p==x.xy()[0] and x.xy()[1]^p==x.xy()[1],P2.division_points(2));
+	P2=L12[randint(0,len(L12)-1)];
+	L1=filter(lambda x: x.xy()[0]^p!=x.xy()[0] and x.xy()[1]^p!=x.xy()[1],Pt1.division_points(2));
+	Pt1=L1[randint(0,len(L1)-1)];
+	L2=filter(lambda x: x.xy()[0]^p!=x.xy()[0] and x.xy()[1]^p!=x.xy()[1],Pt2.division_points(2));
+	Pt2=L2[randint(0,len(L2)-1)];
+	for Pt1 in L1:
+		for P1 in L11:
+			Pt1f=E1b1(Pt1.xy()[0]^p,Pt1.xy()[1]^p);
+			if Pt1f==2*P1+p*Pt1:
+				i1=2;
+			elif Pt1f==6*P1+p*Pt1:
+				i1=6;	
+			print "i1",i1;
+	Ptf=E1(Pt.xy()[0]^p,Pt.xy()[1]^p);
+	if Ptf==2*P+p*Pt:
+		i0=2;
+	elif Ptf==6*P+p*Pt:
+		i0=6;
+	for Pt2 in L2:
+		for P2 in L12:
+			Pt2f=E1b2(Pt2.xy()[0]^p,Pt2.xy()[1]^p);
+			if Pt2f==2*P2+p*Pt2:
+				i2=2;
+			elif Pt2f==6*P2+p*Pt2:
+				i2=6;
+			print "i2",i2;
+	print "i0",i0,"i1",i1,"i2",i2;
 
 def recherche_rationnel_diversifie(q,h):
 	K.<a>=GF(q)
@@ -202,6 +248,11 @@ def etude_end_path_bas(P,Q,L):#décrit l'action de l'endomorphisme de la courbe 
 	b=0;
 	for l in L:
 		P1=l(P1);
+		P=l(P);
+		Q1=l(Q1);
+		Q=l(Q);
+	for l in L:
+		P1=l(P1);
 		Q1=l(Q1);
 	for i in range(1,n):
 		if i*P1==P:
@@ -211,4 +262,4 @@ def etude_end_path_bas(P,Q,L):#décrit l'action de l'endomorphisme de la courbe 
 		if j*Q1==Q:
 			print "j",j;
 			b=j;
-	return a,b;	
+	return a,b, P.curve()==P1.curve(), Q1.curve()==Q.curve();	
