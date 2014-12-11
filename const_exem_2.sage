@@ -123,28 +123,28 @@ def identical_frobenius_path(P,Pt,E1,L1,L2,p): #cette fonction regarde si le che
 	Pt1=L1[randint(0,len(L1)-1)];
 	L2=filter(lambda x: x.xy()[0]^p!=x.xy()[0] and x.xy()[1]^p!=x.xy()[1],Pt2.division_points(2));
 	Pt2=L2[randint(0,len(L2)-1)];
-	for Pt1 in L1:
-		for P1 in L11:
-			Pt1f=E1b1(Pt1.xy()[0]^p,Pt1.xy()[1]^p);
-			if Pt1f==2*P1+p*Pt1:
-				i1=2;
-			elif Pt1f==6*P1+p*Pt1:
-				i1=6;	
-			print "i1",i1;
+	#for Pt1 in L1:
+		#for P1 in L11:
+	Pt1f=E1b1(Pt1.xy()[0]^p,Pt1.xy()[1]^p);
+	if Pt1f==2*P1+p*Pt1:
+		i1=2;
+	elif Pt1f==6*P1+p*Pt1:
+		i1=6;	
+		#print "i1",i1;
 	Ptf=E1(Pt.xy()[0]^p,Pt.xy()[1]^p);
 	if Ptf==2*P+p*Pt:
 		i0=2;
 	elif Ptf==6*P+p*Pt:
 		i0=6;
-	for Pt2 in L2:
-		for P2 in L12:
-			Pt2f=E1b2(Pt2.xy()[0]^p,Pt2.xy()[1]^p);
-			if Pt2f==2*P2+p*Pt2:
-				i2=2;
-			elif Pt2f==6*P2+p*Pt2:
-				i2=6;
-			print "i2",i2;
-	print "i0",i0,"i1",i1,"i2",i2;
+	#for Pt2 in L2:
+		#for P2 in L12:
+	Pt2f=E1b2(Pt2.xy()[0]^p,Pt2.xy()[1]^p);
+	if Pt2f==2*P2+p*Pt2:
+		i2=2;
+	elif Pt2f==6*P2+p*Pt2:
+		i2=6;
+		#print "i2",i2;
+	return [i0,i1,i2];
 
 def recherche_rationnel_diversifie(q,h):
 	K.<a>=GF(q)
